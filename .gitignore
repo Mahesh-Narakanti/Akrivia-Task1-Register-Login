@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+
+# Angular build files
+/dist/
+/out-tsc/
+
+# IDEs and Editors
+# VS Code
+.vscode/
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# macOS system files
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variables
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage reports
+/coverage/
+
+# Miscellaneous
+*.bak
+*.swp
+*.swo
