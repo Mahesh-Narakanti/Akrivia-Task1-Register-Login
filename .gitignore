@@ -41,5 +41,4 @@ yarn-error.log*
 *.swp
 *.swo
 
-frontend/.git/
-
+frontend/node_modules
