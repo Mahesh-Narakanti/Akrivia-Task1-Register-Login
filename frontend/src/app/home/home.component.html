@@ -1,0 +1,25 @@
+<div *ngIf="userDetails" style="margin-left:15cm; margin-top:3cm;">
+    <h2>User Details</h2>
+    <div class="user-details-container">
+        <div class="user-info">
+            <p><strong>Username:</strong> {{ userDetails.username }}</p>
+            <p><strong>Email:</strong> {{ userDetails.email }}</p>
+        </div>
+
+        <div class="user-address">
+            <h3>Address:</h3>
+            <ul>
+                <li *ngFor="let address of userDetails.addresses">
+                    {{ address.addressLine }}, {{ address.city }}, {{ address.postalcode }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="user-languages">
+            <h3>Languages:</h3>
+            <ul>
+                <li *ngFor="let language of userDetails.languages">{{ language.language }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
