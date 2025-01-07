@@ -1,0 +1,110 @@
+<app-header></app-header>
+
+<div *ngIf="userDetails" class="container mt-5">
+  <!-- User or Admin Details Section -->
+  <h2 class="text-center">
+    {{ userDetails.type === "user" ? "User Details" : "Admin Details" }}
+  </h2>
+
+  <div class="row justify-content-center">
+    <!-- User Info -->
+    <div class="col-12 col-md-6">
+      <div class="user-info">
+        <p><strong>Username:</strong> {{ userDetails.username }}</p>
+        <p><strong>Email:</strong> {{ userDetails.email }}</p>
+        <div>
+          <p><strong>Profile Picture:</strong></p>
+<img
+  [src]="userDetails.profilePicture || 'https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg'"
+  alt="Profile Picture" class="img-thumbnail" style="max-width: 200px;" />
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Info -->
+    <div class="col-12 col-md-6">
+      <div class="user-address">
+        <p><strong>Address:</strong></p>
+        <ul class="list-group">
+          <li *ngFor="let address of userDetails.addresses; trackBy: trackByAddressId" class="list-group-item">
+            {{ address.street }}, {{ address.city }}, {{ address.state }}
+            <p><strong>Language:</strong></p>
+            <ul class="list-group">
+              <li *ngFor="let language of address.languages" class="list-group-item">
+                {{ language.language }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Users Section -->
+  <h2 class="text-center mt-5">All Users</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of allUsers; trackBy: trackByUserId">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.password }}</td>
+          <td>
+            <button class="btn btn-primary" [class.disabled]="
+                user.name !== userDetails.username &&
+                userDetails.type !== 'admin'
+              " (click)="editUser(user)" [disabled]="
+                user.name !== userDetails.username &&
+                userDetails.type !== 'admin'
+              ">
+              Edit
+            </button>
+            <button class="btn btn-danger" [class.disabled]="
+                user.name !== userDetails.username &&
+                userDetails.type !== 'admin'
+              " (click)="removeUser(user)" [disabled]="
+                user.name !== userDetails.username &&
+                userDetails.type !== 'admin'
+              ">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center mt-4">
+    <button *ngIf="userDetails?.type === 'admin'" class="btn btn-success" (click)="downloadExcel()">Download Users as
+      Excel</button>
+  </div>
+</div>
+
+<!-- Token Expiry Message -->
+<div *ngIf="tokenExpired; else tokenValid" class="container mt-4">
+  <p class="alert alert-warning text-center">
+    Token expired. Please login again.
+  </p>
+</div>
+
+<!-- Valid Token Actions -->
+<ng-template #tokenValid>
+  <div class="container mt-4 text-center">
+    <button class="btn btn-primary mr-2" (click)="navigateToPage1()">
+      Go to Page 1
+    </button>
+    <button class="btn btn-secondary" (click)="navigateToPage2()">
+      Go to Page 2
+    </button>
+  </div>
+</ng-template>

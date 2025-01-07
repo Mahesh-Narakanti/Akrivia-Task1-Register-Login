@@ -1,0 +1,31 @@
+<!-- Addresses -->
+<div formArrayName="addresses">
+    <div *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i">
+        <h1>Address {{ i + 1 }}</h1>
+        <div class="input-box">
+            <input type="text" formControlName="street" placeholder="Street" required>
+        </div>
+        <div class="input-box">
+            <input type="text" formControlName="city" placeholder="City" required>
+        </div>
+        <div class="input-box">
+            <input type="text" formControlName="state" placeholder="State" required>
+        </div>
+        <button type="button" (click)="removeAddress(i)">Remove Address</button>
+    </div>
+</div>
+
+<button type="button" (click)="addAddress()">Add Address</button>
+
+<!-- Languages -->
+<div formArrayName="languages">
+    <div *ngFor="let language of languages.controls; let i = index" [formGroupName]="i">
+        <h1>Language {{ i + 1 }}</h1>
+        <div class="input-box">
+            <input type="text" formControlName="language" placeholder="Language" required>
+        </div>
+        <button type="button" (click)="removeLanguage(i)">Remove Language</button>
+    </div>
+</div>
+
+<button type="button" (click)="addLanguage()">Add Language</button>

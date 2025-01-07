@@ -1,0 +1,6 @@
+<div *ngIf="tokenExpired; else tokenValid">
+    <p>Token expired. Please login again.</p>
+</div>
+<ng-template #tokenValid>
+    <p> Welcome to page1</p>
+</ng-template>

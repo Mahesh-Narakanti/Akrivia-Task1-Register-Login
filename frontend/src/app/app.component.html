@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="home">Home</a>
+                </li>
+
+                <!-- Display Login and Signup links only if not logged in -->
+                <li *ngIf="!isLoggedIn" class="nav-item">
+                    <a class="nav-link" routerLink="login">Login</a>
+                </li>
+                <li *ngIf="!isLoggedIn" class="nav-item">
+                    <a class="nav-link" [routerLink]="['/register']">Sign Up</a>
+                </li>
+
+                <!-- Display Logout button only if logged in -->
+                <li *ngIf="isLoggedIn" class="nav-item">
+                    <button class="btn btn-danger" (click)="logout()">Logout</button>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="text" placeholder="Search" />
+                <button class="btn" type="button">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.bd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #2c3338;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.wrapper {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 12px;
+    width: 450px;
+    color: #A3A2A2;
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    color: #A3A2A2;
+}
+
+.input-box {
+    color: #A3A2A2;
+    width: 100%;
+    height: 30px;
+    margin: 20px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: #434A52;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(78, 78, 78, 0.2);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #ffffff;
+    padding: 20px 40px 20px 20px;
+}
+
+.input-box input::placeholder {
+    color: #A3A2A2;
+}
+
+.input-box i {
+    position: relative;
+    left: 90%;
+    bottom: 70%;
+    font-size: 20px;
+}
+
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    background-color: #ea4c88;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.wrapper .btn:hover {
+    color: #fff;
+    background-color: #3b4148;
+}
+
+.wrapper .register-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link p {
+    color: #676767;
+}
+
+.register-link p a {
+    color: #BCBABA;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
+
+.form-array-container {
+    margin-top: 20px;
+}
+
+.form-array-container h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #A3A2A2;
+}
+
+.form-array-container button {
+    margin-top: 10px;
+    width: 100%;
+    height: 35px;
+    background-color: #58a6ff;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+}
+
+.form-array-container button:hover {
+    background-color: #4a92e6;
+}
+
+.form-array-container .input-box {
+    margin-bottom: 10px;
+}
+
+.form-array-container .input-box input {
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.remove-button {
+    background-color: #f54e42;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: #d43f2b;
+}
+
+.register-link p {
+    color: #676767;
+}
+
+html {
+    filter: invert(1) hue-rotate(180deg);
+}

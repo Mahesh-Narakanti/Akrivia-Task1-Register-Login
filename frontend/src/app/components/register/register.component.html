@@ -1,0 +1,82 @@
+<div class="bd">
+  <div class="wrapper">
+    <form [formGroup]="registerForm" (ngSubmit)="handleRegister()">
+      <h1>{{ isEditMode ? 'Edit User' : 'Register' }}</h1>
+
+      <div class="input-box" *ngIf="!isEditMode">
+        <label>
+          <input type="radio" formControlName="type" value="user" /> User
+        </label>
+        <label>
+          <input type="radio" formControlName="type" value="admin" /> Admin
+        </label>
+      </div>
+      <div class="i">
+        <label for="profilePicture">{{ isEditMode ? 'Update Profile Picture' :
+        'Upload Profile picture' }}</label>
+        <input type="file" id="profilePicture" (change)="onFileChange($event)" accept="image/*" />
+      </div>
+      
+      <div *ngIf="profilePicture">
+        <h3>Profile Picture Preview:</h3>
+        <img [src]="profilePicture" alt="Profile Picture" style="width: 100px; height: 100px;" />
+      </div>
+
+      <div class="input-box">
+        <input type="text" formControlName="username" placeholder="Username" required>
+      </div>
+
+      <div class="input-box">
+        <input type="email" formControlName="email" placeholder="Email" required>
+      </div>
+
+      <div class="input-box">
+        <input type="password" formControlName="password" placeholder="Password" required>
+      </div>
+
+      <div class="input-box">
+        <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" required>
+      </div>
+
+      <!-- Only show addresses and languages in normal registration mode -->
+      <div *ngIf="!isEditMode">
+        <div formArrayName="addresses">
+          <div *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i"
+            trackBy:trackByAddressId>
+            <h1>Address {{ i + 1 }}</h1>
+            <div class="input-box">
+              <input type="text" formControlName="street" placeholder="Street" required>
+            </div>
+            <div class="input-box">
+              <input type="text" formControlName="city" placeholder="City" required>
+            </div>
+            <div class="input-box">
+              <input type="text" formControlName="state" placeholder="State" required>
+            </div>
+            <button type="button" class="btn" (click)="removeAddress(i)">Remove Address</button>
+          </div>
+        </div>
+        <button type="button" class="btn" (click)="addAddress()">Add Address</button>
+
+        <div formArrayName="languages">
+          <div *ngFor="let language of languages.controls; let i = index" [formGroupName]="i"
+            trackBy:trackByLanguageId>
+            <h1>Language {{ i + 1 }}</h1>
+            <div class="input-box">
+              <input type="text" formControlName="language" placeholder="Language" required>
+            </div>
+            <button type="button" class="btn" (click)="removeLanguage(i)">Remove Language</button>
+          </div>
+        </div>
+        <button type="button" class="btn" (click)="addLanguage()">Add Language</button>
+      </div>
+
+      <button type="submit" class="btn" [disabled]="registerForm.invalid" id="sbmt">{{ isEditMode ? 'Save Changes' :
+        'SignUp' }}</button>
+
+      <div class="register-link">
+        <p>Already have an account? <a routerLink="/login">Log in</a></p>
+      </div>
+    </form>
+  </div>
+</div>
