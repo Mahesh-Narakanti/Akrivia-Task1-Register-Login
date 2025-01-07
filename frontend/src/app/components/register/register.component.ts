@@ -17,6 +17,7 @@ import { RegUser } from '../../interfaces/reguser';
   imports: [ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
