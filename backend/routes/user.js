@@ -44,9 +44,8 @@ router.put("/update-user", async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const hashedPassword = password
-      ? await bcrypt.hash(password, 10)
-      : user.password;
+    const hashedPassword = await bcrypt.hash(password, 10);
+   
 
     await User.query()
       .patch({

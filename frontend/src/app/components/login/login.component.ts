@@ -50,7 +50,10 @@ export class LoginComponent {
       this.Auth.login(name, password, this.userType).subscribe({
         next: (response) => {
           const token = response.token;
-          sessionStorage.setItem('token', token);
+          if (typeof window !== 'undefined' && window.sessionStorage) {
+
+            window.sessionStorage.setItem('token', token);
+          }
           alert('login successful');
           this.fetchUserDetails();
           console.log('login successful:', response);

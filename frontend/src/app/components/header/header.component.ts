@@ -17,12 +17,9 @@ export class Header {
   }
 
   checkLoginStatus(): void {
-    const token = sessionStorage.getItem('token');
-    this.isLoggedIn = !!token;
   }
 
   logout(): void {
-    sessionStorage.removeItem('token');
     this.isLoggedIn = false;
     this.router.navigate(['/login']);
   }

@@ -44,20 +44,10 @@ export class AuthService {
   }
 
   getUserDetails(): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    console.log(token);
-    if (!token) {
-      throw new Error('No token found');
-    }
-    this.flag = true;
     return this.http.get<any>(`${this.apiURL}/users/user-details`);
   }
 
   getALLUsers(): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      throw new Error('No token found');
-    }
     return this.http.get<any>(`${this.apiURL}/users/allUsers`);
   }
 
@@ -83,7 +73,11 @@ export class AuthService {
 
 
   isAuthentic(): Observable<boolean> {
-    const token = sessionStorage.getItem('token');
+    let token = null;
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+
+      token = window.sessionStorage.getItem('token');
+    }
 
     if (token) {
       return this.http

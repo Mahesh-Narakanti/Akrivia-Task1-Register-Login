@@ -4,7 +4,10 @@ import { catchError, throwError } from 'rxjs';
 export const TokenInterceptor: HttpInterceptorFn = (req, next) => {
   console.log('Interceptor invoked');
 
-  let token: string | null = sessionStorage.getItem('token');
+  let token: string | null = null;
+  if (typeof window !== 'undefined' && window.sessionStorage) {
+    token=window.sessionStorage.getItem('token');
+  }
   console.log('Token from sessionStorage:', token);
 
   if (token) {

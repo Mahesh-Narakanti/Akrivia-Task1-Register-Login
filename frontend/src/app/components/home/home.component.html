@@ -1,5 +1,4 @@
-
-<div *ngIf="userDetails" class="container mt-5">
+<div *ngIf="userDetails$ | async as userDetails" class="container mt-5">
   <!-- User or Admin Details Section -->
   <h2 class="text-center">
     {{ userDetails.type === "user" ? "User Details" : "Admin Details" }}
@@ -13,10 +12,9 @@
         <p><strong>Email:</strong> {{ userDetails.email }}</p>
         <div>
           <p><strong>Profile Picture:</strong></p>
-<img
-  [src]="userDetails.profilePicture || 'https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg'"
-  alt="Profile Picture" class="img-thumbnail" style="max-width: 200px;" />
-
+          <img
+            [src]="userDetails.profilePicture || 'https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg'"
+            alt="Profile Picture" class="img-thumbnail" style="max-width: 200px;" />
         </div>
       </div>
     </div>
@@ -43,45 +41,47 @@
   <!-- All Users Section -->
   <h2 class="text-center mt-5">All Users</h2>
   <div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of allUsers; trackBy: trackByUserId">
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.password }}</td>
-          <td>
-            <button class="btn btn-primary" [class.disabled]="
+    <cdk-virtual-scroll-viewport scrollWindow itemSize="30" class="table-viewport">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *cdkVirtualFor="let user of allUsers$ | async; trackBy: trackByUserId">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.password }} </td>
+            <td>
+              <button class="btn btn-primary" [class.disabled]="
                 user.name !== userDetails.username &&
                 userDetails.type !== 'admin'
               " (click)="editUser(user)" [disabled]="
                 user.name !== userDetails.username &&
                 userDetails.type !== 'admin'
               ">
-              Edit
-            </button>
-            <button class="btn btn-danger" [class.disabled]="
+                Edit
+              </button>
+              <button class="btn btn-danger" [class.disabled]="
                 user.name !== userDetails.username &&
                 userDetails.type !== 'admin'
               " (click)="removeUser(user)" [disabled]="
                 user.name !== userDetails.username &&
                 userDetails.type !== 'admin'
               ">
-              Remove
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </cdk-virtual-scroll-viewport>
   </div>
   <div class="text-center mt-4">
     <button *ngIf="userDetails?.type === 'admin'" class="btn btn-success" (click)="downloadExcel()">Download Users as

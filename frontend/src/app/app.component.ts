@@ -6,28 +6,31 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ReactiveFormsModule,NgIf, RouterLink],
+  imports: [RouterOutlet, ReactiveFormsModule, NgIf, RouterLink],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements DoCheck {
   title = 'task1';
   isLoggedIn: boolean = false;
-  
-    constructor(private router: Router) {}
+
+  constructor(private router: Router) {}
   ngDoCheck(): void {
     this.checkLoginStatus();
   }
 
-    checkLoginStatus(): void {
-      const token = sessionStorage.getItem('token');
-      if(token)
-      this.isLoggedIn = true;
+  checkLoginStatus(): void {
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      const token = window.sessionStorage.getItem('token');
+      if (token) this.isLoggedIn = true;
     }
-  
-    logout(): void {
-      sessionStorage.removeItem('token');
-      this.isLoggedIn = false;
-      this.router.navigate(['/login']);
+  }
+
+  logout(): void {
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      window.sessionStorage.removeItem('token');
     }
+    this.isLoggedIn = false;
+    this.router.navigate(['/login']);
+  }
 }
