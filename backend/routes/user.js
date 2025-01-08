@@ -64,6 +64,21 @@ router.put("/update-user", async (req, res, next) => {
   }
 });
 
+router.delete("/delete-user", async (req, res, next) => {
+  const { id } = req.body;
+  console.log(id);
+  try {
+    
+    await User.query().delete().where("id", id);
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+
 router.get("/allUsers", async (req, res, next) => {
   try {
     const users = await User.query().select("*");

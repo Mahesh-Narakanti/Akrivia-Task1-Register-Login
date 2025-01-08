@@ -8,12 +8,13 @@ import { map } from 'rxjs';
 import { UserDetails } from '../../interfaces/user-details';
 import { AllUsers } from '../../interfaces/user';
 import * as XLSX from 'xlsx';
+import { response } from 'express';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, NgFor, Header],
+  imports: [NgIf, NgFor],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -93,7 +94,20 @@ export class HomeComponent implements OnInit {
   }
 
   removeUser(user: any): void {
-    alert('Remove user functionality is not yet implemented!');
+    this.Auth.deleteUser(user.id).subscribe({
+      next: (response) => {
+        alert("user deleted successfully");
+        if (this.userDetails?.type === 'user') {
+          sessionStorage.removeItem('token');
+          this.router.navigate(['/login']);
+        }
+        else
+        {
+          this.fetchAllUsers();
+          }
+      }
+    });
+
   }
 
   navigateToPage1(): void {

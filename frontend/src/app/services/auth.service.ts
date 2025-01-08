@@ -70,10 +70,15 @@ export class AuthService {
   ): Observable<any> {
     const details = { id, name, email, password ,profilePicture};
     return this.http
-      .put(`${this.apiURL}/users/update-user`, details, {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      .put(`${this.apiURL}/users/update-user`, details)
       .pipe(catchError(this.handleError));
+  }
+
+  deleteUser(id: string) :Observable<any>
+  {
+     return this.http
+       .delete(`${this.apiURL}/users/delete-user`, { body: { id } })
+       .pipe(catchError(this.handleError));
   }
 
 

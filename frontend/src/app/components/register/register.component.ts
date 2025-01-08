@@ -6,7 +6,7 @@ import {
   FormArray,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgFor, NgIf } from '@angular/common';
 import { RegUser } from '../../interfaces/reguser';
@@ -14,7 +14,7 @@ import { RegUser } from '../../interfaces/reguser';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, NgFor, NgIf,RouterLink],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   changeDetection:ChangeDetectionStrategy.OnPush
