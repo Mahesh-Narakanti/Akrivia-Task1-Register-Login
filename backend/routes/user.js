@@ -80,12 +80,32 @@ router.delete("/delete-user", async (req, res, next) => {
 
 router.get("/allUsers", async (req, res, next) => {
   try {
-    const users = await User.query().select("*");
+    const { page = 1, limit = 10 } = req.query; // Default to page 1 and limit 10 if not provided
+    const offset = (page - 1) * limit; // Calculate offset for pagination
 
-    res.status(200).json(users);
+    const users = await User.query().select("*").limit(limit).offset(offset);
+
+    const totalUsers = await User.query().count("* as total"); // Get total count of users
+
+    res.status(200).json({
+      users,
+      total: totalUsers[0].total,
+      page: Number(page),
+      limit: Number(limit),
+    });
   } catch (err) {
     next(err);
   }
 });
+
+router.get("/allData", async (req, res, next) => {
+  try {
+    const users = await User.query().select("*");
+    res.status(200).json(users);
+  }
+  catch (err) {
+    next(err);
+  }
+})
 
 module.exports = router;

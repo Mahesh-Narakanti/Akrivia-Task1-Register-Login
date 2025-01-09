@@ -41,7 +41,6 @@
   <!-- All Users Section -->
   <h2 class="text-center mt-5">All Users</h2>
   <div class="table-responsive">
-    <cdk-virtual-scroll-viewport scrollWindow itemSize="30" class="table-viewport">
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
@@ -53,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *cdkVirtualFor="let user of allUsers$ | async; trackBy: trackByUserId">
+          <tr *ngFor="let user of allUsers$ | async; trackBy: trackByUserId">
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
@@ -81,7 +80,11 @@
           </tr>
         </tbody>
       </table>
-    </cdk-virtual-scroll-viewport>
+    <div class="pagination">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage <= 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalUsers / pageSize | number:'1.0-0' }}</span>
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage * pageSize >= totalUsers">Next</button>
+    </div>
   </div>
   <div class="text-center mt-4">
     <button *ngIf="userDetails?.type === 'admin'" class="btn btn-success" (click)="downloadExcel()">Download Users as

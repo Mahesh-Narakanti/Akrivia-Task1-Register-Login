@@ -14,6 +14,7 @@ import { UserDetails } from '../../interfaces/user-details';
 import { AllUsers } from '../../interfaces/user';
 import * as XLSX from 'xlsx';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { response } from 'express';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,11 @@ export class HomeComponent implements OnInit {
   allUsers$ = this.allUsersSubject.asObservable(); // Observable signal for allUsers
 
   tokenExpired: boolean = false;
+
+  // Pagination variables
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalUsers: number = 0;
 
   constructor(
     private Auth: AuthService,
@@ -71,16 +77,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  fetchAllUsers(): void {
-    this.Auth.getALLUsers().subscribe({
+  fetchAllUsers(
+    page: number = this.currentPage,
+    limit: number = this.pageSize
+  ): void {
+    this.Auth.getALLUsers(page, limit).subscribe({
       next: (data: any) => {
-        this.allUsersSubject.next(data); // Update allUsers signal
+        this.allUsersSubject.next(data.users); // Update the users list
+        this.totalUsers = data.total; // Update the total user count
+        this.currentPage = data.page; // Update current page
         this.sortUsers();
       },
       error: (error) => {
         console.error('Error fetching all users:', error);
       },
     });
+  }
+
+  onPageChange(page: number): void{
+    this.fetchAllUsers(page);
   }
 
   sortUsers(): void {
@@ -141,28 +156,22 @@ export class HomeComponent implements OnInit {
   }
 
   downloadExcel(): void {
-    if (
-      !this.allUsersSubject.value ||
-      this.allUsersSubject.value.length === 0
-    ) {
-      console.error('No user data available for download');
-      return;
-    }
 
-    // Convert the allUsers array to a format suitable for Excel
-    const ws = XLSX.utils.json_to_sheet(
-      this.allUsersSubject.value.map((user) => ({
-        ID: user.id,
-        Name: user.name,
-        Email: user.email,
-        Password: user.password,
-      }))
-    );
+    this.Auth.getAllData().subscribe({
+      next: (response : AllUsers[]) => {
+        const ws = XLSX.utils.json_to_sheet(
+          response.map((user :AllUsers) => ({
+            ID: user.id,
+            Name: user.name,
+            Email: user.email,
+            Password: user.password,
+          }))
+        );
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Users'); // Add sheet with users data
 
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Users'); // Add sheet with users data
-
-    // Generate Excel file and prompt download
-    XLSX.writeFile(wb, 'users-details.xlsx');
+        XLSX.writeFile(wb, 'users-details.xlsx');
+      }
+    });
   }
 }
